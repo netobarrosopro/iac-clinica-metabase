@@ -1,0 +1,11 @@
+# Copie para backend.hcl (gitignored) e ajuste:
+#   terraform init -backend-config=backend.hcl
+#
+# O bucket precisa existir ANTES do primeiro init (bootstrap manual) e nao e
+# gerenciado por esta stack - state nao pode depender do proprio state.
+# Sugestao de nome, unico globalmente:
+#   state-metabase-clinica-<SEU_ACCOUNT_ID>
+bucket = "state-metabase-clinica-000000000000"
+
+# Descomente para isolar outro ambiente no mesmo bucket:
+# key = "metabase/prod/terraform.tfstate"

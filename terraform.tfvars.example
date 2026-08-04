@@ -1,0 +1,31 @@
+# Copie para terraform.tfvars e ajuste.
+# NUNCA coloque segredos aqui - a senha do banco e gerenciada pelo RDS.
+
+aws_region  = "sa-east-1"
+environment = "dev"
+prefix      = "metabase"
+
+# E-mail dos alertas de falha do ETL (confirme a subscription apos o apply):
+alert_email = "voce@suaempresa.com.br"
+
+# Restrinja o acesso web ao seu IP/VPN:
+# alb_allowed_cidr_blocks = ["203.0.113.10/32"]
+
+# Para HTTPS direto no ALB (certificado ACM na MESMA regiao do ALB):
+# certificate_arn = "arn:aws:acm:sa-east-1:123456789012:certificate/xxxx"
+
+# metabase_image    = "metabase/metabase:v0.62.1.3"
+# db_engine_version = "17"
+
+# Athena/Glue: nomes derivados do ambiente por padrao. Override so se preciso:
+# athena_workgroup_name = "metabase-dev-silver"
+# glue_database_name    = "metabase_dev_silver"
+
+# CSVs da camada raw: "auto" detecta separador e encoding por arquivo.
+# raw_csv_separator = "auto"
+# raw_csv_encoding  = "auto"
+
+# Build local das Lambdas (pip install pg8000). Detectado automaticamente
+# ("python" no Windows, "python3" no Linux/macOS/CI). Defina apenas para
+# apontar um interpretador especifico, ex.: um venv ou uma versao exata:
+# build_python = "python3.12"

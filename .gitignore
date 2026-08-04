@@ -1,0 +1,77 @@
+# =============================================================================
+# Terraform
+# =============================================================================
+
+# Cache local de providers e modules (recriado a cada "terraform init")
+**/.terraform/*
+
+# Statefile e backups. O backend deste projeto e remoto (S3 + use_lockfile),
+# entao nao deveria existir localmente - mas nunca versione por seguranca:
+# o state pode conter dados sensiveis em plaintext, mesmo com segredos no
+# Secrets Manager (outputs marcados sensitive as vezes vazam para o state).
+*.tfstate
+*.tfstate.*
+
+# Planos salvos (terraform plan -out=...) e logs de crash
+*.tfplan
+*.tfplan.*
+crash.log
+crash.*.log
+
+# Overrides locais - nunca devem valer para o time todo
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Variaveis reais do ambiente/cliente (contas, dominios, e-mails). So o
+# .example fica versionado como template.
+*.tfvars
+*.tfvars.json
+!terraform.tfvars.example
+
+# Config parcial do backend S3: contem o nome do bucket de state, que embute
+# o account ID. So o .example e versionado.
+backend.hcl
+!backend.hcl.example
+
+# NAO ignore .terraform.lock.hcl - esse arquivo deve ser commitado.
+# Ele trava a versao exata dos providers (aws ~> 5.0, archive, null) entre
+# sua maquina, CI e qualquer colega. Sem ele, um init futuro pode puxar
+# provider novo e mudar comportamento sem nenhuma linha de HCL ter mudado.
+
+# =============================================================================
+# Build do pipeline ETL (gerado por null_resource/archive_file a cada apply)
+# =============================================================================
+build/
+*.zip
+
+# =============================================================================
+# Python (Lambdas)
+# =============================================================================
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# =============================================================================
+# Dados de teste/producao - nunca versionar (dado de clinica = LGPD)
+# =============================================================================
+*.csv
+
+# =============================================================================
+# Segredos e credenciais locais
+# =============================================================================
+*.pem
+*.key
+.env
+.env.*
+
+# =============================================================================
+# SO / Editor
+# =============================================================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

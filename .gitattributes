@@ -1,0 +1,14 @@
+# Normaliza tudo para LF no repositorio e tambem no working copy.
+# Sem isso, um clone no Windows (autocrlf=true) grava CRLF, e qualquer script
+# que rode nos runners Linux do GitHub Actions falha com erros obscuros
+# ("$'\r': command not found", shebang invalido).
+* text=auto eol=lf
+
+# Binarios: nunca normalizar
+*.zip binary
+*.png binary
+*.jpg binary
+*.gz  binary
+
+# Lockfile de providers: gerado pelo terraform, nao vale revisar linha a linha
+.terraform.lock.hcl linguist-generated=true
